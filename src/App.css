@@ -517,3 +517,328 @@ main[id] {
     transition: none;
   }
 }
+
+.story-media .still-inlay {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.footer-placeholder {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Shared alignment for navigation and dropdown lists */
+
+.site-header {
+  --nav-columns: 90px 90px minmax(260px, 340px) 90px 90px;
+  --nav-gap: clamp(20px, 3vw, 55px);
+  --nav-padding: 90px;
+}
+
+.main-nav {
+  grid-template-columns: var(--nav-columns);
+  column-gap: var(--nav-gap);
+  padding-inline: var(--nav-padding);
+}
+
+/* Navigation items are now buttons */
+
+.nav-trigger {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--green-deep);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.17em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 180ms ease;
+}
+
+.nav-trigger:hover,
+.nav-trigger.is-active {
+  opacity: 0.6;
+}
+
+.nav-trigger:focus-visible {
+  outline: 1px solid var(--green-crescent);
+  outline-offset: 4px;
+}
+
+/* Wide dropdown overlays the page below the header */
+
+.mega-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  min-height: 290px;
+  border-top: 1px solid rgba(23, 41, 35, 0.1);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 14px 22px rgba(16, 23, 15, 0.06);
+  color: var(--green-deep);
+}
+
+/* Keeps hidden panels hidden, even with layout styles */
+
+.mega-dropdown[hidden] {
+  display: none;
+}
+
+.mega-dropdown-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--nav-columns);
+  justify-content: center;
+  column-gap: var(--nav-gap);
+  min-height: 290px;
+  padding: 35px var(--nav-padding) 45px;
+}
+
+.mega-links {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 17px;
+  min-width: 0;
+}
+
+/* Align each list with its navigation button */
+
+.mega-links-stay {
+  grid-column: 1;
+}
+
+.mega-links-visit {
+  grid-column: 2;
+}
+
+.mega-links-eat {
+  grid-column: 4;
+}
+
+.mega-links-events {
+  grid-column: 5;
+}
+
+.mega-links a,
+.mega-placeholder {
+  display: block;
+  width: fit-content;
+  max-width: 260px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+}
+
+.mega-links a {
+  transition: opacity 180ms ease;
+}
+
+.mega-links a:hover {
+  opacity: 0.6;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+/* Seasonal Offers appears only in the Stay dropdown */
+
+.mega-side-note {
+  position: absolute;
+  top: 35px;
+  left: 3.75%;
+}
+
+/* FAQs stays in the same place in every dropdown */
+
+.mega-faq {
+  position: absolute;
+  top: 35px;
+  right: 4%;
+}
+
+/* Tablet: match the existing navigation columns */
+
+@media (min-width: 701px) and (max-width: 1100px) {
+  .site-header {
+    --nav-columns: 65px 65px minmax(230px, 290px) 65px 75px;
+    --nav-gap: 20px;
+    --nav-padding: 75px;
+  }
+
+  .nav-trigger {
+    font-size: 0.8125rem;
+  }
+
+  .mega-links a,
+  .mega-placeholder {
+    font-size: 0.8125rem;
+  }
+
+  .mega-side-note {
+    left: 20px;
+    top: auto;
+    bottom: 30px;
+  }
+
+  .mega-faq {
+    right: 20px;
+  }
+}
+
+/* Mobile: a roomy dropdown opened by tapping */
+
+@media (max-width: 700px) {
+  .main-nav {
+    grid-template-columns: repeat(4, 1fr) 36px;
+    column-gap: 10px;
+    padding-inline: 20px;
+  }
+
+  .nav-trigger {
+    min-height: 36px;
+    padding: 5px 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .mega-dropdown {
+    min-height: 290px;
+    max-height: calc(100svh - 145px);
+    overflow-y: auto;
+  }
+
+  .mega-dropdown-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    justify-content: stretch;
+    gap: 25px;
+    min-height: 290px;
+    padding: 30px 25px 40px;
+  }
+
+  .mega-links-stay,
+  .mega-links-visit,
+  .mega-links-eat,
+  .mega-links-events {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 10px;
+  }
+
+  .mega-links {
+    gap: 17px;
+  }
+
+  .mega-links a,
+  .mega-placeholder {
+    max-width: 100%;
+    font-size: 0.875rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .mega-side-note {
+    position: static;
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .mega-side-note:empty {
+    display: none;
+  }
+
+  .mega-faq {
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-trigger,
+  .mega-links a {
+    transition: none;
+  }
+}
+
+/* Creamier dropdown with less transparency */
+
+.mega-dropdown {
+  background: rgba(247, 244, 238, 0.96);
+}
+
+/* Larger, more readable dropdown text */
+
+.mega-links a,
+.mega-placeholder {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.mega-links {
+  gap: 18px;
+}
+
+/* Seasonal Offers and FAQs at the bottom */
+
+.mega-side-note {
+  top: auto;
+  bottom: 30px;
+}
+
+.mega-faq {
+  top: auto;
+  bottom: 30px;
+}
+
+/* Mobile layout */
+
+@media (max-width: 700px) {
+  .mega-dropdown-inner {
+    grid-template-rows: 1fr auto;
+  }
+
+  .mega-links a,
+  .mega-placeholder {
+    font-size: 1rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .mega-side-note {
+    position: static;
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+  }
+
+  .mega-faq {
+    position: static;
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+  }
+}

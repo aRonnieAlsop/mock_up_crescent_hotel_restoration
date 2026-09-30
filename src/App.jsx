@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 
 const asset = (name) => `${import.meta.env.BASE_URL}${name}`;
@@ -7,6 +8,45 @@ const bookingUrl =
 
 const mapUrl =
   "https://www.google.com/maps/search/?api=1&query=The+Crescent+Hotel+Crescent+Mills+California";
+
+const storeUrl = "https://www.crescenthotelandstore.com/";
+
+const navigation = {
+  stay: {
+    label: "Stay",
+    items: [
+      { label: "HOTEL" },
+      { label: "HUFF HOUSE" },
+      { label: "STOREKEEPER'S QUARTERS" },
+      { label: "RAILWAY COTTAGE" },
+      { label: "BOOK NOW", href: bookingUrl },
+    ],
+  },
+  visit: {
+    label: "Visit",
+    items: [
+      { label: "Discover Indian Valley" },
+      { label: "Beyond the Valley" },
+      { label: "Activities & Attractions" },
+    ],
+  },
+  eat: {
+    label: "Eat",
+    items: [
+      { label: "RESTAURANT" },
+      { label: "BAR" },
+      { label: "The Crescent Store", href: storeUrl },
+    ],
+  },
+  events: {
+    label: "Events",
+    items: [
+      { label: "UPCOMING EVENTS" },
+      { label: "HOST AN EVENT" },
+      { label: "WEDDINGS" },
+    ],
+  },
+};
 
 function VideoInlay() {
   return (
@@ -21,6 +61,17 @@ function VideoInlay() {
     >
       <source src={asset("landing.mp4")} type="video/mp4" />
     </video>
+  );
+}
+
+function StillInlay() {
+  return (
+    <img
+      className="still-inlay"
+      src={asset("still.jpg")}
+      alt="The Crescent Hotel"
+      loading="lazy"
+    />
   );
 }
 
@@ -41,42 +92,161 @@ function MapIcon() {
   );
 }
 
+function SiteHeader() {
+  const [activeMenu, setActiveMenu] = useState(null);
+
+  function handlePointerEnter(event, key) {
+    if (event.pointerType === "mouse") {
+      setActiveMenu(key);
+    }
+  }
+
+  function handleBlur(event) {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setActiveMenu(null);
+    }
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Escape") {
+      setActiveMenu(null);
+
+      event.currentTarget
+        .querySelector(`[data-nav-trigger="${activeMenu}"]`)
+        ?.focus();
+    }
+  }
+
+  function renderNavigationButton(key) {
+    const menu = navigation[key];
+    const isOpen = activeMenu === key;
+
+    return (
+      <button
+        type="button"
+        className={`nav-trigger nav-${key} ${
+          isOpen ? "is-active" : ""
+        }`}
+        data-nav-trigger={key}
+        aria-expanded={isOpen}
+        aria-controls={`dropdown-${key}`}
+        onPointerEnter={(event) => handlePointerEnter(event, key)}
+        onClick={() => {
+          setActiveMenu((current) => (current === key ? null : key));
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            setActiveMenu(key);
+
+            requestAnimationFrame(() => {
+              document
+                .getElementById(`dropdown-${key}`)
+                ?.querySelector("a")
+                ?.focus();
+            });
+          }
+        }}
+      >
+        {menu.label}
+      </button>
+    );
+  }
+
+  return (
+    <header
+      className={`site-header ${activeMenu ? "has-open-menu" : ""}`}
+      onPointerLeave={(event) => {
+        if (event.pointerType === "mouse") {
+          setActiveMenu(null);
+        }
+      }}
+      onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
+    >
+      <nav className="main-nav" aria-label="Main navigation">
+        {renderNavigationButton("stay")}
+        {renderNavigationButton("visit")}
+
+        <a
+          className="hotel-name"
+          href="#home"
+          onClick={() => setActiveMenu(null)}
+          onPointerEnter={(event) => {
+            if (event.pointerType === "mouse") {
+              setActiveMenu(null);
+            }
+          }}
+        >
+          The Crescent Hotel
+        </a>
+
+        {renderNavigationButton("eat")}
+        {renderNavigationButton("events")}
+
+        <a
+          className="map-link"
+          href={mapUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Find The Crescent Hotel on a map"
+          onFocus={() => setActiveMenu(null)}
+        >
+          <MapIcon />
+        </a>
+      </nav>
+
+      {Object.entries(navigation).map(([key, menu]) => (
+        <div
+          key={key}
+          id={`dropdown-${key}`}
+          className={`mega-dropdown mega-dropdown-${key}`}
+          hidden={activeMenu !== key}
+        >
+          <div className="mega-dropdown-inner">
+            <div className="mega-side-note">
+              {key === "stay" && (
+                <span className="mega-placeholder">Seasonal Offers</span>
+              )}
+            </div>
+
+            <nav
+              className={`mega-links mega-links-${key}`}
+              aria-label={`${menu.label} options`}
+            >
+              {menu.items.map((item) =>
+                item.href ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <span key={item.label} className="mega-placeholder">
+                    {item.label}
+                  </span>
+                )
+              )}
+            </nav>
+
+            <div className="mega-faq">
+              <span className="mega-placeholder">FAQs</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </header>
+  );
+}
+
 function App() {
   return (
     <>
-      <header className="site-header">
-        <nav className="main-nav" aria-label="Main navigation">
-          <a className="nav-stay" href="#stay">
-            Stay
-          </a>
-
-          <a className="nav-visit" href="#history">
-            Visit
-          </a>
-
-          <a className="hotel-name" href="#home">
-            The Crescent Hotel
-          </a>
-
-          <a className="nav-eat" href="#next-chapter">
-            Eat
-          </a>
-
-          <a className="nav-events" href="#next-chapter">
-            Events
-          </a>
-
-          <a
-            className="map-link"
-            href={mapUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Find The Crescent Hotel on a map"
-          >
-            <MapIcon />
-          </a>
-        </nav>
-      </header>
+      <SiteHeader />
 
       <main id="home">
         <section className="landing" aria-labelledby="landing-title">
@@ -104,7 +274,7 @@ function App() {
 
         <section className="story-section" id="history">
           <div className="story-media">
-            <VideoInlay />
+            <StillInlay />
           </div>
 
           <div className="story-copy">
@@ -181,7 +351,7 @@ function App() {
 
         <section className="story-section" id="stay">
           <div className="story-media">
-            <VideoInlay />
+            <StillInlay />
           </div>
 
           <div className="story-copy">
@@ -232,6 +402,7 @@ function App() {
           <a href={mapUrl} target="_blank" rel="noreferrer">
             Find Us
           </a>
+          <span className="footer-placeholder">FAQs</span>
         </nav>
 
         <nav className="footer-links" aria-label="Explore the hotel">
