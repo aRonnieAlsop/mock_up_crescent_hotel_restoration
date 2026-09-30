@@ -1,0 +1,519 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap");
+
+:root {
+  --green-deep: #10170f;
+  --green-crescent: #172923;
+  --page: #fff;
+  --cream: #f7f4ee;
+
+  font-family: "DM Sans", sans-serif;
+  color: var(--green-deep);
+  background: var(--page);
+}
+
+#root {
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.main-nav {
+  position: relative;
+  display: grid;
+  grid-template-columns: 90px 90px minmax(260px, 340px) 90px 90px;
+  justify-content: center;
+  align-items: center;
+  column-gap: clamp(20px, 3vw, 55px);
+  min-height: 86px;
+  padding: 15px 90px;
+  color: var(--green-deep);
+}
+
+.main-nav > a {
+  text-align: center;
+}
+
+.main-nav > a:not(.hotel-name):not(.map-link) {
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.hotel-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.9rem;
+  font-weight: 500;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.map-link {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+}
+
+.map-link svg {
+  width: 27px;
+  height: 27px;
+}
+
+.main-nav a {
+  transition: opacity 180ms ease;
+}
+
+.main-nav a:hover {
+  opacity: 0.6;
+}
+
+/* Inset opening video */
+
+.landing {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: calc(100% - 7.5%);
+  height: calc(100svh - 86px);
+  min-height: 580px;
+  max-height: 850px;
+  margin: 0 auto 48px;
+  overflow: hidden;
+  background: var(--green-crescent);
+  color: white;
+}
+
+.video-inlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.landing > .video-inlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.landing-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    transparent 30%,
+    rgba(16, 23, 15, 0.25) 60%,
+    rgba(16, 23, 15, 0.55)
+  );
+}
+
+.landing-copy {
+  width: 40%;
+  max-width: 570px;
+  padding: 50px clamp(35px, 5vw, 95px);
+  text-align: center;
+}
+
+.landing-copy h1 {
+  margin: 0 0 24px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 4.2vw, 4.8rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.landing-copy p {
+  max-width: 370px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* Links with the short underline from the reference */
+
+.text-link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 28px;
+  padding-bottom: 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.text-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 35px;
+  height: 1px;
+  background: currentColor;
+  transition: width 180ms ease;
+}
+
+.text-link:hover::after {
+  width: 100%;
+}
+
+.landing-copy .text-link::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Alternating editorial sections */
+
+.story-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  margin-bottom: 48px;
+  background: var(--page);
+}
+
+.story-media {
+  position: relative;
+  min-width: 0;
+  min-height: 680px;
+  background: var(--green-crescent);
+  overflow: hidden;
+}
+
+.story-media .video-inlay {
+  position: absolute;
+  inset: 0;
+}
+
+.story-copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 75px clamp(40px, 7vw, 135px);
+}
+
+.copy-inner {
+  width: 100%;
+  max-width: 470px;
+}
+
+.story-copy h2 {
+  margin: 0 0 24px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 2.6vw, 3rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.story-copy p {
+  margin: 0 0 30px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.story-copy p:last-of-type {
+  margin-bottom: 0;
+}
+
+.story-section-reverse .story-media {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.story-section-reverse .story-copy {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.section-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.section-links .text-link + .text-link {
+  margin-top: 18px;
+}
+
+/* Light footer: logo, two link columns, and a right-hand note */
+
+.site-footer {
+  display: grid;
+  grid-template-columns: 150px minmax(150px, 1fr) minmax(180px, 1.5fr) minmax(
+      260px,
+      1.4fr
+    );
+  align-items: start;
+  gap: clamp(30px, 4vw, 80px);
+  padding: 65px 3.75% 45px;
+  background: var(--page);
+  color: var(--green-crescent);
+}
+
+.footer-logo {
+  display: block;
+  max-width: 150px;
+}
+
+.footer-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 17px;
+}
+
+.footer-links a {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer-note {
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+}
+
+.footer-note h2 {
+  margin: 0 0 18px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.footer-note > p:not(.copyright) {
+  max-width: 380px;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.footer-note .text-link {
+  margin-top: 16px;
+}
+
+.copyright {
+  margin: auto 0 0;
+  padding-top: 65px;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+section[id],
+main[id] {
+  scroll-margin-top: 105px;
+}
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+  .main-nav {
+    grid-template-columns: 65px 65px minmax(230px, 290px) 65px 75px;
+    column-gap: 20px;
+    padding-inline: 75px;
+  }
+
+  .hotel-name {
+    font-size: 1.7rem;
+  }
+
+  .main-nav > a:not(.hotel-name):not(.map-link) {
+    font-size: 0.8125rem;
+  }
+
+  .map-link {
+    right: 2%;
+  }
+
+  .landing-copy {
+    width: 46%;
+    padding-inline: 35px;
+  }
+
+  .story-copy {
+    padding: 60px 40px;
+  }
+
+  .story-media {
+    min-height: 610px;
+  }
+
+  .site-footer {
+    grid-template-columns: 130px 1fr 1fr;
+    gap: 35px;
+  }
+
+  .footer-note {
+    grid-column: 2 / -1;
+    min-height: 0;
+    margin-top: 20px;
+  }
+
+  .copyright {
+    padding-top: 35px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .main-nav {
+    grid-template-columns: repeat(4, 1fr) 36px;
+    grid-template-rows: auto auto;
+    gap: 20px 10px;
+    min-height: 125px;
+    padding: 17px 20px;
+  }
+
+  .hotel-name {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    font-size: 2rem;
+  }
+
+  .nav-stay {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .nav-visit {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .nav-eat {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .nav-events {
+    grid-column: 4;
+    grid-row: 2;
+  }
+
+  .main-nav > a:not(.hotel-name):not(.map-link) {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .map-link {
+    position: static;
+    grid-column: 5;
+    grid-row: 2;
+    width: 36px;
+    height: 36px;
+    transform: none;
+  }
+
+  .map-link svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .landing {
+    width: calc(100% - 30px);
+    height: calc(100svh - 140px);
+    min-height: 560px;
+    margin-bottom: 35px;
+    justify-content: center;
+  }
+
+  .landing-shade {
+    background: rgba(16, 23, 15, 0.4);
+  }
+
+  .landing-copy {
+    width: 100%;
+    max-width: 440px;
+    padding: 45px 28px;
+  }
+
+  .landing-copy h1 {
+    font-size: clamp(3rem, 10vw, 4.3rem);
+  }
+
+  .story-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+  }
+
+  .story-media {
+    min-height: 0;
+    height: 480px;
+  }
+
+  .story-copy {
+    padding: 65px 8%;
+  }
+
+  .story-copy h2 {
+    font-size: 2.4rem;
+  }
+
+  .site-footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 35px 25px;
+    padding: 40px 8%;
+  }
+
+  .footer-logo {
+    grid-column: 1 / -1;
+    width: 150px;
+    margin-bottom: 10px;
+  }
+
+  .footer-note {
+    grid-column: 1 / -1;
+    margin-top: 15px;
+  }
+
+  section[id],
+  main[id] {
+    scroll-margin-top: 145px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-nav a,
+  .text-link::after {
+    transition: none;
+  }
+}
